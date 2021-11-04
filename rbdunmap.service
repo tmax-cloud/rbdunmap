@@ -1,0 +1,14 @@
+[Unit]
+Description=Unmap RBD devices
+After=network-online.target
+Before=poweroff.target shutdown.target reboot.target halt.target
+
+[Service]
+EnvironmentFile=-/etc/sysconfig/ceph
+Environment=RBDMAPFILE=/etc/ceph/rbdmap
+Type=oneshot
+RemainAfterExit=yes
+ExecStop=/usr/bin/rbdunmap unmap-all
+
+[Install]
+WantedBy=multi-user.target
